@@ -49,8 +49,11 @@ extern void __exception_closeall();
 
 int main()
 {
+	if ( (*(u32*)(0xCD8005A0) >> 16 ) == 0xCAFE ) // Wii U
+	{
 	/* vWii widescreen patch by tueidj */
 	write32(0xd8006a0, 0x30000004), mask32(0xd8006a8, 0, 2);
+	}
 
 	InitGecko();
 	gprintf("MinimaLauncher v1.0\n");
