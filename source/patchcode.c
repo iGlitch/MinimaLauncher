@@ -640,3 +640,22 @@ void PatchRegion(void *Address, int Size)
 		addr_start += 4;
 	}
 }
+
+void Https_Patch(void *addr, u32 len)
+{
+	char *cur = (char *)addr;
+	const char *end = (char *)addr + len;
+
+	do
+	{
+		if (memcmp(cur, "https://", 8) == 0 && cur[8] != 0)
+		{
+			int len = strlen(cur);
+			memmove(cur + 4, cur + 5, len - 5);
+			cur[len - 1] = 0;
+			DCFlushRange((void *)((unsigned) cur & ~0x1F), ((unsigned) len + 0x3F) & ~0x1F);
+			cur += len;
+		}
+	} while (++cur < end);
+}
+
