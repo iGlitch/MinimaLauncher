@@ -90,6 +90,7 @@ u32 Apploader_Run(void)
 		if(hooktype != 0 && hookpatched == false)
 			hookpatched = dogamehooks(dst, len, false);
 		Remove_001_Protection(dst, len);
+		Https_Patch(dst, len);
 		DCFlushRange(dst, len);
 		ICInvalidateRange(dst, len);
 	}
