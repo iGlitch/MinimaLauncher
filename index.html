@@ -1,1 +1,337 @@
-Hello World
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<head>
+
+<title>MinimaLauncher</title>
+<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,700' rel='stylesheet' type='text/css'>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-40913244-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<SCRIPT TYPE="text/javascript"> 
+var message="Sorry, right-click has been disabled"; 
+function clickIE() {if (document.all) {(message);return false;}} 
+function clickNS(e) {if 
+(document.layers||(document.getElementById&&!document.all)) { 
+if (e.which==2||e.which==3) {(message);return false;}}} 
+if (document.layers) 
+{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;} 
+else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;} 
+document.oncontextmenu=new Function("return false") 
+</SCRIPT> 
+
+
+<style type="text/css">
+body{
+font:10px open sans;
+line-height:15px;
+text-align:justify;
+color:#444;
+margin:0px;
+cursor:default;
+}
+a{color:#ccc; text-decoration:none; transition:0.6s;}
+a:hover{color:#F23F3F; transition:0.6s;}
+
+::-webkit-scrollbar-thumb { background-color: #ccc; margin-right:5px;}
+::-webkit-scrollbar { height:5px; width: 5px;}
+::-webkit-scrollbar-track { background-color:#F23F3F; -moz-box-shadow: inset 0 0 0 2px #fff; -webkit-box-shadow: inset 0 0 0 2px #fff; box-shadow: inset 0 0 0px 2px #fff; }
+
+.init{
+position:absolute;
+top:210px;
+width:500px;
+left:0px;
+right:0px;
+margin:auto;
+}
+.text{text-transform:uppercase; font:50px josefin sans; letter-spacing:-3px; position:relative; top:-91px; left:400px; color:#ccc;}
+.emdash{width:100px; height:1px; background:#ccc; left:25px; margin-right:30px; display:inline-block; top:-13px; position:relative;}
+
+.topbar{
+width:100%;
+left:0px; top:0px;
+box-shadow:0px 1px 8px #ccc;
+padding:15px;
+position:fixed;
+font:10px open sans;
+letter-spacing:4px;
+font-weight:700;
+text-transform:uppercase;
+text-align:center;
+background:#fff;
+z-index:99999999;
+}
+.topbar a{color:#ccc; font-weight:300; letter-spacing:2px;}
+.topbar a:hover{color:#F23F3F;}
+
+.holder{
+width:90%;
+position:absolute;
+top:100%;
+opacity:1;
+padding-left:90px;
+padding-top:16px;
+padding-bottom:120px;
+transition:0.6s;
+}
+.link{position:relative; display:block; border-bottom:1px #ccc solid; font:10px open sans; text-transform:uppercase; text-align:center; letter-spacing:2px; padding:3px; margin-bottom:7px;}
+.link .liner{position:absolute; z-index:2; width:0px; left:50%; margin:auto; transition:0.6s; bottom:-1px; height:1px; background:#F23F3F;}
+.link:hover .liner{width:50%; transition:0.6s;}
+.link .liner2{position:absolute; z-index:2; width:0px; right:50%; margin:auto; transition:0.6s; bottom:-1px; height:1px; background:#F23F3F;}
+.link:hover .liner2{padding-left:50%; transition:0.6s;}
+.spadecard .crosser{height:100%; left:125px; top:0px; position:absolute; -webkit-transform:rotate(32deg); width:1px; background:#eee; transition:1.5s ease-out; opacity:1;}
+#crosseralt{-webkit-transform:rotate(-32deg); background:#F23F3F; height:93%; top:30px; left:135px;}
+.spadecard:hover .crosser{opacity:0; transition:0.6s;}
+.spadecard{
+width:230px;
+height:360px;
+box-shadow:1px 1px 10px #ccc;
+border-radius:5px;
+margin-right:20px;
+margin-left:20px;
+padding:10px;
+position:relative;
+display:inline-block;
+}
+.spadecard:hover #content{opacity:1; transition:0.8s; -webkit-transform:rotateY(0deg);}
+.spadecard #content{
+-webkit-transform:rotateY(90deg);
+opacity:0;
+transition:0.8s;
+width:205px;
+height:300px;
+overflow:hidden;
+margin:auto;
+margin-top:45px;
+}
+#subcontent{
+height:250px;
+overflow:auto;
+padding-right:10px;
+}
+#title{
+text-align:right;
+text-transform:uppercase;
+font:12px open sans;
+letter-spacing:px;
+margin-bottom:20px;
+}
+#tag a{
+font:8px open sans;
+text-transform:uppercase;
+letter-spacing:2px;
+margin-right:3px;
+}
+#tagsect{
+font:10px open sans;
+margin-bottom:7px;
+text-transform:uppercase;
+text-align:left;
+}
+#ava{float:left;}
+#ava img{border:6px #f5f5f5 solid; width:40px; margin-right:10px;}
+.type{
+font:16px open sans;
+text-transform:uppercase;
+position:absolute;
+left:17px;
+color:#ccc;
+}
+.clover{
+position:absolute;
+top:34px;
+left:15px;
+}
+.hearts{
+height:0px;
+width:0px;
+border-left:6.5px solid transparent;
+border-right:6.5px solid transparent;
+border-top:10px solid #fff;
+left:17px;
+top:37px;
+position:absolute;	
+}
+.heartwrapper{
+position:absolute;
+z-index:-1;
+left:15px;
+top:36px;
+height:0px;
+width:0px;
+border-left:8px solid transparent;
+border-right:8px solid transparent;
+border-top:12px solid #F23F3F;
+}
+#spadeswrapper{
+position:absolute;
+z-index:-1;
+left:15px;
+top:36px;
+height:0px;
+width:0px;
+border-left:8px solid transparent;
+border-right:8px solid transparent;
+border-bottom:12px solid #ccc;
+}
+#spades{
+height:0px;
+width:0px;
+left:17px;
+top:37px;
+position:absolute;	
+border-left:6.5px solid transparent;
+border-right:6.5px solid transparent;
+border-bottom:10px solid #fff;
+}
+#diamonds{
+width:7px;
+height:7px;
+position:absolute;
+top:38px;
+left:18px;
+border:1px #F23F3F solid;
+-webkit-transform:rotate(45deg);
+}
+#h{color:#F23F3F;}
+#cr{font:8px helvetica; position:fixed; right:10px; bottom:5px; text-transform:uppercase; z-index:99999;}
+</style>
+</head>
+<body onselectstart="return false;" ondragstart="return false;">
+<div id=top></div>
+<div class=topbar>doesnt get better than this
+<div style="display:inline-block; width:70px; background:#ccc; height:1px; position:relative; top:-2px; margin:0px 15px;"></div>
+<a href=/>refresh</a><div style="display:inline-block; width:30px;"></div>
+<a href="http://brawlminus.net/forums/threads/release-%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9-minimalauncher-v1-1.354/">discussion</a><div style="display:inline-block; width:30px;"></div>
+<a href="http://www.mediafire.com/download/f7bgzfinnbj6yyk/MinimaLauncher.zip">download</a><div style="display:inline-block; width:30px;"></div>
+</div>
+<div id=cr><a data-scroll data-speed="500" data-easing="easeInCubic" data-url="true" href=#top>up, up and away</a> / <a href="http://glitchery.tumblr.com/">Glitch</a></div>
+
+<!-- START OF WRAPPER DIV-->
+<div class=init>
+<img src="http://i.imgur.com/tJ0Y1bK.png">
+<div class=text><div class=emdash></div> <a data-scroll data-speed="500" data-easing="easeInCubic" data-url="true" href=#s>start</a></div>
+<div style="text-align:center; text-transform:uppercase; margin-top:-45px; font-size:9px; letter-spacing:2px; color:#ccc;">pick a card, any card
+</div>
+</div>
+<!-- /END OF WRAPPER DIV -->
+
+<!-- START OF CARD LAYOUT
+WATCH IT WHERE YOU SHOULD FILL THINGS -->
+<div class=holder id=s>
+
+<!-- START OF CLOVER CARD -->
+<div class=spadecard>
+<div class=crosser></div>
+<div class=type>A</div> <!-- THIS INDICATES AN ACE CARD. REPLACE WITH WHATEVER YOU WANT IF YOU WISH -->
+<div class=clover>
+<img src="http://i.imgur.com/6o4iozN.png" width=16></div>
+
+<!-- START OF CONTENT -->
+<div id=content>
+<div id=title>what</div>
+<div id=subcontent>
+<div id=ava><img src="http://3.bp.blogspot.com/-4mRQXUapIqs/UgHQSq7M6tI/AAAAAAAAGqs/QpSe5E_5IGg/s320/epic.png"></div>
+<!-- START OF ABOUT CONTENT -->
+MinimaLauncher is a mini Wii/vWii homebrew application that <b>launches</b> a game that is inserted into the disc slot.  Of course, the game has to be a Wii or Gamecube game, and GC will not work on vWii. It takes the beautiful nature of being <i>minimal</i> and the outcome is you playing your game from whatever region, with whatever cheats, at utmost ease.
+<p>
+Initially, this was made to launch Super Smash Bros. Brawl with the SDHC extension code, but I figured I should let it be a new way of loading any Wii/GC game with any code you may desire.  It is open source and available at my <a href="http://github.com/iGlitch"/>github</a>
+</div>
+<!-- /END OF CONTENT -->
+</div>
+</div>
+<!-- /END OF CLOVER CARD-->
+
+<!-- START OF HEARTS CARD -->
+<div class=spadecard>
+<div class=crosser id=crosseralt></div>
+<div class=type id=h>A</div>
+<div class=clover style="left:13px;">
+<img src="http://i.imgur.com/mu0jyZs.png">
+</div>
+
+<!-- START OF CONTENT -->
+<div id=content>
+<div id=title>where</div>
+<div id=subcontent>
+<a href="http://brawlminus.net"><div class=link>home <div class=liner></div> <div class=liner2></div></div></a>
+<a href="http://blog.brawlminus.net"><div class=link>blog <div class=liner></div> <div class=liner2></div></div></a>
+<a href="http://forums.brawlminus.net"><div class=link>forums <div class=liner></div> <div class=liner2></div></div></a>
+<a href="https://github.com/iGlitch/MinimaLauncher"><div class=link>github <div class=liner></div> <div class=liner2></div></div></a>
+<a href="http://iliyon.tumblr.com/"><div class=link>iliyon<div class=liner></div> <div class=liner2></div></div></a>
+</div>
+<!-- /END OF CONTENT -->
+</div>
+</div>
+<!-- /END OF HEARTS CARD -->
+
+<!-- START OF SPADES CARD -->
+<div class=spadecard>
+<div class=crosser></div>
+<div class=type>A</div>
+<div class=clover>
+<img src="http://i.imgur.com/iVV3z9X.png">
+</div>
+<div id=content>
+<div id=title>Why?</div>
+<div id=subcontent>
+<!--START OF CONTENT -->
+<div id=tag>
+<div id=tagsect>Why not?</div>
+This little project helped me, I was putting my programming skills to the test. It also proves that minimalism == functionality. I am proud that this was created, and I hope you are too.
+It is an alternative to GeckoOS, NeoGamma, WiiLauncher, TinyLoad, ProjectM Launcher, Riivolution(Kinda).
+<p><div id=tagsect>Features?</div>
+<ul><li>GUI-less loading</li>
+<li>Minimality</li>
+<li>Launches Brawl RSBE with IOS58
+<li>Integrated gameconfig.txt for Brawl and Kirby (SUKE01)</li>
+<li>Much more! or less?</li>
+</ul>
+<div id=tagsect>Special Thanks</div>
+FIX94<br>
+megazig
+</div>
+<!-- /END OF CONTENT -->
+</div>
+</div>
+</div>
+<!-- /END OF SPADES CARD -->
+
+<!-- START OF DIAMONDS CARD -->
+<div class=spadecard>
+<div class=crosser id=crosseralt></div>
+<div class=type id=h>A</div>
+<div class=clover style="left:14px;"><img src="http://i.imgur.com/fm4hxHP.png"></div>
+<!-- START OF CONTENT -->
+<div id=content>
+<div id=title>How?</div>
+<div id=subcontent>
+Place the files inside of your apps folder. Your folder layout should now appear as: SD:\apps\Minimalauncher\
+Within that folder should be:
+<ul><li>boot.dol</li>
+<li>meta.xml</li>
+<li>icon.png</li>
+</ul>
+Run the homebrew channel and click load.
+<p>It also works with those of you that use hackless loading.
+Put the boot.elf on the root of your sd card and boom!
+It's that easy, the game <i>should</i> now be up and running.
+</div>
+<!-- /END OF CONTENT -->
+</div>
+</div>
+<!-- END OF DIAMONDS CARD -->
+</div>
+<script type="text/javascript" src="http://static.tumblr.com/wb7siqo/GDqn2vz28/smooth-scroll.js"></script>
+</body>
+</html>
