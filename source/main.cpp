@@ -23,6 +23,7 @@
 #include <fat.h>
 #include <sdcard/wiisd_io.h>
 #include <ogc/machine/processor.h>
+#include <wiiuse/wpad.h>
 #include "apploader.h"
 #include "memory.h"
 #include "utils.h"
@@ -33,8 +34,7 @@
 #include "gc.hpp"
 #include "fst.h"
 #include "gameconfig_ssbb.h"
- #include "gameconfig_kirby.h"
-using namespace std;
+#include "gameconfig_kirby.h"
 
 /* Boot Variables */
 u32 GameIOS = 0;
@@ -51,13 +51,15 @@ int main()
 {
 	if ( (*(u32*)(0xCD8005A0) >> 16 ) == 0xCAFE ) // Wii U
 	{
-	/* vWii widescreen patch by tueidj */
-	write32(0xd8006a0, 0x30000004), mask32(0xd8006a8, 0, 2);
+		/* vWii widescreen patch by tueidj */
+		write32(0xd8006a0, 0x30000004), mask32(0xd8006a8, 0, 2);
 	}
 
 	InitGecko();
 	gprintf("MinimaLauncher v1.0\n");
 	VIDEO_Init();
+	WPAD_Init();
+	PAD_Init();
 
 	/* Setup Low Memory */
 	Disc_SetLowMemPre();
@@ -125,7 +127,23 @@ int main()
 			}
 			/* gct */
 			char gamepath[22];
-			sprintf(gamepath, "sd:/codes/%.6s.gct", (char*)Disc_ID);
+			if((*(u32*)Disc_ID & 0xFFFFFF00) == 0x52534200)//rsb?01 brawl
+			{
+				PAD_ScanPads();
+				u32 pad_down = PAD_ButtonsDown(0) | PAD_ButtonsDown(1) | PAD_ButtonsDown(2) | PAD_ButtonsDown(3);
+				WPAD_ScanPads();
+				u32 wpad_down = WPAD_ButtonsDown(0) | WPAD_ButtonsDown(1) | WPAD_ButtonsDown(2) | WPAD_ButtonsDown(3);
+				if ((wpad_down & WPAD_BUTTON_LEFT) || (pad_down & PAD_BUTTON_LEFT))
+					sprintf(gamepath, "sd:/codes/ProjectM.gct");
+				else if ((wpad_down & WPAD_BUTTON_RIGHT) || (pad_down & PAD_BUTTON_RIGHT))
+					sprintf(gamepath, "sd:/codes/Minus.gct");
+				else
+					sprintf(gamepath, "sd:/codes/%.6s.gct", (char*)Disc_ID);
+			}
+			else
+			{
+				sprintf(gamepath, "sd:/codes/%.6s.gct", (char*)Disc_ID);
+			}
 			gprintf("%s\n", gamepath);
 			f = fopen(gamepath, "rb");
 			if(f != NULL)
