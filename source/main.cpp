@@ -56,7 +56,7 @@ int main()
 	}
 
 	InitGecko();
-	gprintf("MinimaLauncher v1.0\n");
+	gprintf("MinimaLauncher v1.2\n");
 	VIDEO_Init();
 	WPAD_Init();
 	PAD_Init();
