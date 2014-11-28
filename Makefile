@@ -30,7 +30,7 @@ LDFLAGS		=	-g -ggdb $(MACHDEP) -Wl,-Map,$(notdir $@).map,--section-start,.init=0
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-logc -lfat
+LIBS	:=	-lwiiuse -lbte -logc -lfat
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
