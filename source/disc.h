@@ -6,73 +6,73 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define WII_MAGIC            0x5D1C9EA3
-#define GC_MAGIC            0xC2339F3D
+#define WII_MAGIC			0x5D1C9EA3
+#define GC_MAGIC			0xC2339F3D
 
 /* Disc header structure */
 struct discHdr
 {
-    /* Game ID */
-    u8 id[6];
+	/* Game ID */
+	u8 id[6];
 
-    /* Game version */
-    u16 version;
+	/* Game version */
+	u16 version;
 
-    /* Audio streaming */
-    u8 streaming;
-    u8 bufsize;
+	/* Audio streaming */
+	u8 streaming;
+	u8 bufsize;
 
-    /* Padding */
-    u64 chantitle; // Used for channels
+	/* Padding */
+	u64 chantitle; // Used for channels
 
-    /* Sorting */
-    u16 index;
-    u8 esrb;
-    u8 controllers;
-    u8 players;
-    u8 wifi;
+	/* Sorting */
+	u16 index;
+	u8 esrb;
+	u8 controllers;
+	u8 players;
+	u8 wifi;
 
-    /* Wii Magic word */
-    u32 magic;
+	/* Wii Magic word */
+	u32 magic;
 
-    /* GC Magic word */
-    u32 gc_magic;
+	/* GC Magic word */
+	u32 gc_magic;
 
-    /* Game title */
-    char title[64];
+	/* Game title */
+	char title[64];
 
-    /* Encryption/Hashing */
-    u8 encryption;
-    u8 h3_verify;
+	/* Encryption/Hashing */
+	u8 encryption;
+	u8 h3_verify;
 
-    /* Padding */
-    u32 casecolor;
-    u8 unused3[26];
+	/* Padding */
+	u32 casecolor;
+	u8 unused3[26];
 } ATTRIBUTE_PACKED;
 
 struct gc_discHdr
 {
-    /* Game ID */
-    u8 id[6];
+	/* Game ID */
+	u8 id[6];
 
-    /* Game version */
-    u16 version;
+	/* Game version */
+	u16 version;
 
-    /* Audio streaming */
-    u8 streaming;
-    u8 bufsize;
+	/* Audio streaming */
+	u8 streaming;
+	u8 bufsize;
 
-    /* Padding */
-    u8 unused1[18];
+	/* Padding */
+	u8 unused1[18];
 
-    /* Magic word */
-    u32 magic;
+	/* Magic word */
+	u32 magic;
 
-    /* Game title */
-    char title[64];
-    
-    /* Padding */
-    u8 unused2[64];
+	/* Game title */
+	char title[64];
+	
+	/* Padding */
+	u8 unused2[64];
 } ATTRIBUTE_PACKED;
 
 s32 Disc_Open();

@@ -8,9 +8,9 @@ extern "C" {
 
 enum
 {
-    TYPE_WII_DISC = 0,
-    TYPE_WII_WBFS,
-    TYPE_WII_WBFS_EXT,
+	TYPE_WII_DISC = 0,
+	TYPE_WII_WBFS,
+	TYPE_WII_WBFS_EXT,
 };
 
 enum
@@ -22,19 +22,19 @@ enum
     TYPE_HOMEBREW,
     TYPE_END
 };
-#define NoGameID(x)            (x == TYPE_PLUGIN || x == TYPE_HOMEBREW)
+#define NoGameID(x)			(x == TYPE_PLUGIN || x == TYPE_HOMEBREW)
 
 enum
 {
-    IOS_TYPE_D2X = 0,
-    IOS_TYPE_WANIN,
-    IOS_TYPE_HERMES,
-    IOS_TYPE_KWIIRK,
-    IOS_TYPE_NEEK2O,
-    IOS_TYPE_NORMAL_IOS,
-    IOS_TYPE_STUB,
+	IOS_TYPE_D2X = 0,
+	IOS_TYPE_WANIN,
+	IOS_TYPE_HERMES,
+	IOS_TYPE_KWIIRK,
+	IOS_TYPE_NEEK2O,
+	IOS_TYPE_NORMAL_IOS,
+	IOS_TYPE_STUB,
 };
-#define CustomIOS(x)        (x != IOS_TYPE_NORMAL_IOS && x != IOS_TYPE_STUB)
+#define CustomIOS(x)		(x != IOS_TYPE_NORMAL_IOS && x != IOS_TYPE_STUB)
 
 #ifdef __cplusplus
 }
