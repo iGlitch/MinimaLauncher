@@ -35,6 +35,7 @@
 #include "fst.h"
 #include "gameconfig_ssbb.h"
 #include "gameconfig_kirby.h"
+#include "patchcode.h"
 
 /* Boot Variables */
 u32 GameIOS = 0;
@@ -192,13 +193,29 @@ int main()
 			/* Originally from tueidj - taken from NeoGamma (thx) */
 			*(vu32*)0xCC003024 = 1;
 			/* Boot */
-			asm volatile (
-				"lis %r3, AppEntrypoint@h\n"
-				"ori %r3, %r3, AppEntrypoint@l\n"
-				"lwz %r3, 0(%r3)\n"
-				"mtlr %r3\n"
-				"blr\n"
-			);
+            if(hooktype == 0)
+            {
+                asm volatile (
+                    "lis %r3, AppEntrypoint@h\n"
+                    "ori %r3, %r3, AppEntrypoint@l\n"
+                    "lwz %r3, 0(%r3)\n"
+                    "mtlr %r3\n"
+                    "blr\n"
+                );
+            }
+            else
+			{
+				asm volatile (
+						"lis %r3, AppEntrypoint@h\n"
+						"ori %r3, %r3, AppEntrypoint@l\n"
+						"lwz %r3, 0(%r3)\n"
+						"mtlr %r3\n"
+						"lis %r3, 0x8000\n"
+						"ori %r3, %r3, 0x18A8\n"
+						"mtctr %r3\n"
+						"bctr\n"
+						);
+			}
 			/* Fail */
 			IRQ_Restore(level);
 		}
