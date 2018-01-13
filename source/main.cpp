@@ -193,17 +193,17 @@ int main()
 			/* Originally from tueidj - taken from NeoGamma (thx) */
 			*(vu32*)0xCC003024 = 1;
 			/* Boot */
-            if(hooktype == 0)
-            {
-                asm volatile (
-                    "lis %r3, AppEntrypoint@h\n"
-                    "ori %r3, %r3, AppEntrypoint@l\n"
-                    "lwz %r3, 0(%r3)\n"
-                    "mtlr %r3\n"
-                    "blr\n"
-                );
-            }
-            else
+			if(hooktype == 0)
+			{
+				asm volatile (
+					"lis %r3, AppEntrypoint@h\n"
+					"ori %r3, %r3, AppEntrypoint@l\n"
+					"lwz %r3, 0(%r3)\n"
+					"mtlr %r3\n"
+					"blr\n"
+				);
+			}
+			else
 			{
 				asm volatile (
 						"lis %r3, AppEntrypoint@h\n"
