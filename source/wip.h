@@ -7,9 +7,9 @@ extern "C" {
 
 typedef struct
 {
-	u32 offset;
-	u32 srcaddress;
-	u32 dstaddress;
+    u32 offset;
+    u32 srcaddress;
+    u32 dstaddress;
 } WIP_Code;
 
 bool set_wip_list(WIP_Code *list, int size);
