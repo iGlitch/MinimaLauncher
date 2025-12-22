@@ -1,4 +1,3 @@
-
 #ifndef _GECKO_H_
 #define _GECKO_H_
 

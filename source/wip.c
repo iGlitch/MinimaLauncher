@@ -1,4 +1,3 @@
-
 #include <gccore.h>
 #include <string.h>
 #include <stdlib.h>
