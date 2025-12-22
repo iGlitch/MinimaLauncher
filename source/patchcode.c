@@ -7,7 +7,6 @@
 #include "apploader.h"
 #include "patchcode.h"
 #include "memory.h"
-#include "gecko.h"
 
 u32 hooktype = 0x01;
 u8 configbytes[2];
@@ -373,7 +372,6 @@ bool PatchReturnTo( void *Address, int Size, u32 id )
 	//if the function is found
 	if( found == 3 && ad[ 3 ] )
 	{
-		gprintf("patch __OSLaunchMenu( 0x00010001, 0x%08x )\n", id);
 		u32 nop = 0x60000000;
 
 		//the magic that writes the TID to the registers
@@ -581,12 +579,10 @@ void PatchRegion(void *Address, int Size)
 	{
 		if(!memcmp(addr_start, sig_setting, sizeof(sig_setting)))
 		{
-			gprintf("Patching setting region\n");
 			memcpy(addr_start, patch_setting, sizeof(patch_setting));
 		}
 		if(!memcmp(addr_start, sig_SYSCONF, sizeof(sig_SYSCONF)))
 		{
-			gprintf("Patching SYSCONF region\n");
 			memcpy(addr_start, patch_SYSCONF, sizeof(patch_SYSCONF));
 		}
 		addr_start += 4;

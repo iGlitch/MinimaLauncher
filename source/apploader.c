@@ -7,7 +7,6 @@
 #include "patchcode.h"
 #include "wip.h"
 #include "fst.h"
-#include "gecko.h"
 #include "memory.h"
 
 /* Apploader function pointers */
@@ -26,6 +25,22 @@ static const char *GameID = (const char*)0x80000000;
 
 static bool Remove_001_Protection(void *Address, int Size);
 bool hookpatched = false;
+
+bool geckoinit = false;
+char gprintfBuffer[256];
+void gprintf(const char *format, ...)
+{
+	va_list va;
+	if(geckoinit)
+	{
+		va_start(va, format);
+		int len = vsnprintf(gprintfBuffer, 255, format, va);
+		u32 level = IRQ_Disable();
+		usb_sendbuffer_safe(1, gprintfBuffer, len);
+		IRQ_Restore(level);
+		va_end(va);
+	}
+}
 
 /* Thanks Tinyload */
 static struct
@@ -46,7 +61,6 @@ u32 Apploader_Run(void)
 	s32 ret;
 
 	app_entry appldr_entry;
-	//app_entry_raw appldr_entry;
 	app_init  appldr_init;
 	app_main  appldr_main;
 	app_final appldr_final;

@@ -1,6 +1,5 @@
 #include <string.h>
 #include <ogcsys.h>
-#include "gecko.h"
 
 /* Constants */
 #define IOCTL_DI_READID					0x70

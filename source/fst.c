@@ -6,7 +6,6 @@
 #include <ogc/ipc.h>
 #include <malloc.h>
 #include "fst.h"
-#include "gecko.h"
 #include "memory.h"
 #include "patchcode.h"
 #include "codehandler.h"
@@ -245,14 +244,12 @@ void ocarina_set_codes(void *list, u8 *listend, u8 *cheats, u32 cheatSize)
 		codelistend = listend;
 	if(cheatSize <= 0 || cheats == NULL)
 	{
-		gprintf("Ocarina: No codes found\n");
 		code_buf = NULL;
 		code_size = 0;
 		return;
 	}
 	if (cheatSize > (u32)codelistend - (u32)codelist)
 	{
-		gprintf("Ocarina: Too many codes found.\n");
 		code_buf = NULL;
 		code_size = 0;
 		return;
@@ -260,7 +257,6 @@ void ocarina_set_codes(void *list, u8 *listend, u8 *cheats, u32 cheatSize)
 	code_size = cheatSize;
 	code_buf = malloc(code_size); //internal copy
 	memcpy(code_buf, cheats, code_size);
-	gprintf("Ocarina: Codes found.\n");
 }
 
 void app_pokevalues()
@@ -316,11 +312,9 @@ void load_handler()
 {
 	if(debuggerselect == 0x01)
 	{
-		gprintf("Ocarina: Debugger selected.\n");
 		memcpy((void*)0x80001800, codehandler, codehandler_size);
 		if(code_size > 0 && code_buf)
 		{
-			gprintf("Ocarina: Codes found.\n");
 			memcpy((void*)0x80001CDE, &codelist, 2);
 			memcpy((void*)0x80001CE2, ((u8*) &codelist) + 2, 2);
 			memcpy((void*)0x80001F5A, &codelist, 2);
@@ -328,7 +322,6 @@ void load_handler()
 		}
 		else
 		{
-			gprintf("Ocarina: No Codes found.\n");
 			*(u32*)0x80002774 = 1; //pause for debugger
 		}
 		DCFlushRange((void*)0x80001800, codehandler_size);
@@ -336,16 +329,12 @@ void load_handler()
 	}
 	else
 	{
-		gprintf("Ocarina: No Debugger selected.\n");
 		memcpy((void*)0x80001800, codehandleronly, codehandleronly_size);
 		if(code_size > 0 && code_buf)
 		{
-			gprintf("Ocarina: Codes found.\n");
 			memcpy((void*)0x80001906, &codelist, 2);
 			memcpy((void*)0x8000190A, ((u8*) &codelist) + 2, 2);
 		}
-		else
-			gprintf("Ocarina: No Codes found.\n");
 		DCFlushRange((void*)0x80001800, codehandleronly_size);
 		ICInvalidateRange((void*)0x80001800, codehandleronly_size);
 	}
