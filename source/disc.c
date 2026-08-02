@@ -1,23 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <ogcsys.h>
-#include <unistd.h>
-#include <malloc.h>
 #include <ogc/lwp_watchdog.h>
 
 #include "disc.h"
 #include "memory.h"
-#include "types.h"
 #include "wdvd.h"
-
-struct discHdr wii_hdr ATTRIBUTE_ALIGN(32);
-struct gc_discHdr gc_hdr ATTRIBUTE_ALIGN(32);
 
 /* Constants */
 #define PART_INFO_OFFSET	0x10000
 
-s32 Disc_Open()
+s32 Disc_Open(void)
 {
 	/* Reset drive */
 	s32 ret = WDVD_Reset();
@@ -25,11 +17,10 @@ s32 Disc_Open()
 		return ret;
 
 	/* Read disc ID */
-	ret = WDVD_ReadDiskId((u8*)Disc_ID);
-	return ret;
+	return WDVD_ReadDiskId((u8*)Disc_ID);
 }
 
-void Disc_SetLowMemPre()
+void Disc_SetLowMemPre(void)
 {
 	/* Setup low memory before Apploader */
 	*BI2				= 0x817E5480; // BI2
@@ -115,7 +106,7 @@ s32 Disc_FindPartition(u32 *outbuf)
 	return 0;
 }
 
-void Disc_SetTime()
+void Disc_SetTime(void)
 {
 	/* Set proper time */
 	settime(secs_to_ticks(time(NULL) - 946684800));
@@ -210,58 +201,4 @@ void Disc_SetVMode(GXRModeObj *rmode, u32 rmode_reg)
 		VIDEO_WaitVSync();
 	else while(VIDEO_GetNextField())
 		VIDEO_WaitVSync();
-}
-
-
-s32 Disc_ReadHeader(void *outbuf)
-{
-	/* Read Wii disc header */
-	return WDVD_UnencryptedRead(outbuf, sizeof(struct discHdr), 0);
-}
-
-s32 Disc_ReadGCHeader(void *outbuf)
-{
-	/* Read GC disc header */
-	return WDVD_UnencryptedRead(outbuf, sizeof(struct gc_discHdr), 0);
-}
-
-s32 Disc_Type(bool gc)
-{
-	s32 ret = 0;
-	u32 check = 0;
-	u32 magic = 0;
-
-	if(!gc)
-	{
-		check = WII_MAGIC;
-		ret = Disc_ReadHeader(&wii_hdr);
-		magic = wii_hdr.magic;
-	}
-	else
-	{
-		check = GC_MAGIC;
-		ret = Disc_ReadGCHeader(&gc_hdr);
-		if(memcmp(gc_hdr.id, "GCOPDV", 6) == 0)
-			magic = GC_MAGIC;
-		else
-			magic = gc_hdr.magic;
-	}
-
-	if (ret < 0)
-		return ret;
-
-	/* Check magic word */
-	if (magic != check) return -1;
-
-	return 0;
-}
-
-s32 Disc_IsWii(void)
-{
-	return Disc_Type(0);
-}
-
-s32 Disc_IsGC(void)
-{
-	return Disc_Type(1);
 }

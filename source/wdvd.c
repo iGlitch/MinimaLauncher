@@ -1,27 +1,15 @@
 #include <string.h>
 #include <ogcsys.h>
+#include "wdvd.h"
 
 /* Constants */
 #define IOCTL_DI_READID					0x70
 #define IOCTL_DI_READ					0x71
-#define IOCTL_DI_WAITCVRCLOSE			0x79
 #define IOCTL_DI_GETCOVER				0x88
 #define IOCTL_DI_RESET					0x8A
 #define IOCTL_DI_OPENPART				0x8B
-#define IOCTL_DI_CLOSEPART				0x8C
 #define IOCTL_DI_UNENCREAD				0x8D
 #define IOCTL_DI_SEEK					0xAB
-#define IOCTL_DI_STOPLASER				0xD2
-#define IOCTL_DI_OFFSET					0xD9
-#define IOCTL_DI_DISC_BCA				0xDA
-#define IOCTL_DI_REQUESTERROR			0xE0
-#define IOCTL_DI_STOPMOTOR				0xE3
-#define IOCTL_DI_DVDAUDIOBUFFERCFG		0xE4
-#define IOCTL_DI_SETWBFSMODE			0xF4
-
-#define IOCTL_DI_SETFRAG				0xF9
-#define IOCTL_DI_GETMODE				0xFA
-#define IOCTL_DI_HELLO					0xFB
 
 /* Variables */
 static u32 inbuf[8]  ATTRIBUTE_ALIGN(32);
@@ -36,7 +24,7 @@ s32 WDVD_Init(void)
 	if(di_fd < 0)
 	{
 		di_fd = IOS_Open(di_fs, 0);
-		if (di_fd < 0)
+		if(di_fd < 0)
 			return di_fd;
 	}
 	return 0;
@@ -129,10 +117,9 @@ s32 WDVD_OpenPartition(u32 offset, u32 *IOS)
 {
 	static u8 Tmd_Buffer[0x4A00] ATTRIBUTE_ALIGN(32);
 	static ioctlv Vectors[5] ATTRIBUTE_ALIGN(32);
-	s32 ret;
 
-	memset(inbuf, 0, sizeof inbuf);
-	memset(outbuf, 0, sizeof outbuf);
+	memset(inbuf, 0, sizeof(inbuf));
+	memset(outbuf, 0, sizeof(outbuf));
 
 	inbuf[0] = IOCTL_DI_OPENPART << 24;
 	inbuf[1] = offset;
@@ -148,7 +135,7 @@ s32 WDVD_OpenPartition(u32 offset, u32 *IOS)
 	Vectors[4].data		= outbuf;
 	Vectors[4].len		= 0x20;
 
-	ret = IOS_Ioctlv(di_fd, IOCTL_DI_OPENPART, 3, 2, (ioctlv *)Vectors);
+	s32 ret = IOS_Ioctlv(di_fd, IOCTL_DI_OPENPART, 3, 2, Vectors);
 	if(ret < 0)
 		return ret;
 	*IOS = (u32)(Tmd_Buffer[0x18b]);
@@ -163,14 +150,14 @@ s32 WDVD_GetCoverStatus(u32 *status)
 	inbuf[0] = IOCTL_DI_GETCOVER << 24;
 
 	s32 ret = IOS_Ioctl(di_fd, IOCTL_DI_GETCOVER, inbuf, sizeof(inbuf), outbuf, sizeof(outbuf));
-	if (ret < 0) return ret;
+	if(ret < 0)
+		return ret;
 
-	if (ret == 1) {
+	if(ret == 1)
+	{
 		/* Copy cover status */
 		memcpy(status, outbuf, sizeof(u32));
-
 		return 0;
 	}
-
 	return -ret;
 }

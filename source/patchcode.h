@@ -1,28 +1,25 @@
 #ifndef __PATCHCODE_H__
 #define __PATCHCODE_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <gctypes.h>
+
+/*
+0 No Hook
+1 VBI
+2 KPAD read
+3 Joypad Hook
+4 GXDraw Hook
+5 GXFlush Hook
+6 OSSleepThread Hook
+7 AXNextFrame Hook
+*/
+#define HOOKTYPE 1
+
 // Globals
-extern u32 hooktype;
-extern u8 configbytes[2];
+extern const u32 hookdata[4];
 
 // Function prototypes
-bool dogamehooks(void *addr, u32 len, bool channel);
-void langpatcher(void *addr, u32 len);
-void vidolpatcher(void *addr, u32 len);
-void PatchVideoSneek(void *addr, u32 len);
-void PatchCountryStrings(void *Address, int Size);
-void PatchAspectRatio(void *addr, u32 len, u8 aspect);
-bool PatchReturnTo(void *Address, int Size, u32 id);
-void Patch_fwrite(void *Address, int Size);
-s32 BlockIOSReload(void);
-void PatchRegion(void *Address, int Size);
+bool dogamehooks(void *addr, u32 len);
 void Https_Patch(void *addr, u32 len);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif // __PATCHCODE_H__
